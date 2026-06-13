@@ -1,0 +1,59 @@
+main.py
+import sklearn.datasets
+import sklearn.model_selection
+import sklearn.neighbors
+import sklearn.metrics
+
+def run_project():
+    print("--- DecodeLabs Classification Project Started ---")
+    
+    # 1. Load the Iris data
+    iris_data = sklearn.datasets.load_iris()
+    
+    features = iris_data.data
+    labels = iris_data.target
+    
+    # 2. Split the data into train and test sets (80% train, 20% test)
+    split_result = sklearn.model_selection.train_test_split(
+        features, 
+        labels, 
+        test_size=0.20, 
+        random_state=42, 
+        shuffle=True
+    )
+    
+    X_train = split_result[0]
+    X_test = split_result[1]
+    y_train = split_result[2]
+    y_test = split_result[3]
+    
+    print("Loading data completed successfully.")
+    print("Total training samples generated:")
+    print(len(X_train))
+    print("Total testing samples generated:")
+    print(len(X_test))
+    
+    # 3. Create the KNN model with K=5
+    print("Initializing KNeighborsClassifier model...")
+    my_model = sklearn.neighbors.KNeighborsClassifier(n_neighbors=5)
+    
+    # 4. Train the model
+    print("Starting the model training phase now...")
+    my_model.fit(X_train, y_train)
+    print("Training finished.")
+    
+    # 5. Make predictions on test data
+    print("Starting the prediction phase on test data...")
+    all_predictions = my_model.predict(X_test)
+    
+    # 6. Calculate accuracy score manually using metrics
+    print("Calculating final validation scores...")
+    final_accuracy = sklearn.metrics.accuracy_score(y_test, all_predictions)
+    
+    print("--- Final Output Metrics ---")
+    print("Model Testing Accuracy Score is:")
+    print(final_accuracy)
+    print("--------------------------------------------")
+
+if __name__ == "__main__":
+    run_project()
